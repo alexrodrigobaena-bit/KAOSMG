@@ -261,7 +261,7 @@
                             </p>
                         </div>
 
-                        <!-- RESTAURADO: Detalles exactos de la ruta -->
+                        <!-- Detalles exactos de la ruta -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-y border-white/5">
                             <div class="flex items-start gap-4">
                                 <div class="bg-kaosRed/10 p-3 rounded-lg text-kaosRed text-xl"><i class="fa-solid fa-calendar-days"></i></div>
@@ -302,7 +302,6 @@
                         </button>
                     </div>
                     
-                    <!-- RESTAURADO: Tu imagen exacta de weserv -->
                     <div class="lg:col-span-5 relative min-h-[400px]">
                         <img src="https://images.weserv.nl/?url=www.buscounviaje.com/fotos-tours/287/288800/Ruta.66.moto.jpg" 
                              alt="Harley Davidson Ruta 66" 
@@ -314,7 +313,7 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DE PROPUESTAS (BUZÓN NETLIFY) -->
+    <!-- SECCIÓN DE PROPUESTAS (BUZÓN FORMSPREE) -->
     <section id="propuestas" class="py-24 bg-gradient-to-b from-kaosDark to-kaosGray border-b border-kaosRed/10 scroll-mt-20">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             
@@ -362,19 +361,23 @@
                             </div>
                         </div>
 
-                       <form id="form-propuesta" class="space-y-4">
-    <div>
-        <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Tema / Título Principal</label>
-        <input type="text" name="Titulo_Propuesta" required placeholder="Ej. Ruta nocturna este verano" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition">
-    </div>
-    <div>
-        <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Explicación detallada</label>
-        <textarea name="Detalles_Explicacion" required rows="4" placeholder="Explica tu idea para llevarla a la próxima reunión..." class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition resize-none"></textarea>
-    </div>
-    <button type="submit" id="btn-submit-proposal" class="w-full bg-kaosRed hover:bg-red-800 text-white font-heading text-lg py-3.5 rounded-lg transition duration-300 tracking-wider uppercase flex items-center justify-center gap-2">
-        <i class="fa-solid fa-envelope"></i> Enviar a la Junta
-    </button>
-</form>
+                        <!-- NUEVO FORMULARIO LIMPIO PARA FORMSPREE -->
+                        <form id="form-propuesta" class="space-y-4">
+                            <input type="hidden" id="hidden-alias" name="Alias_Motero" value="" />
+                            
+                            <div>
+                                <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Tema / Título Principal</label>
+                                <input type="text" name="Titulo_Propuesta" id="proposal-title" required placeholder="Ej. Ruta nocturna este verano" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Explicación detallada</label>
+                                <textarea name="Detalles_Explicacion" id="proposal-desc" required rows="4" placeholder="Explica tu idea para llevarla a la próxima reunión..." class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition resize-none"></textarea>
+                            </div>
+                            
+                            <button type="submit" id="btn-submit-proposal" class="w-full bg-kaosRed hover:bg-red-800 text-white font-heading text-lg py-3.5 rounded-lg transition duration-300 tracking-wider uppercase flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-envelope"></i> Enviar a la Junta
+                            </button>
+                        </form>
                     </div>
 
                     <div class="bg-kaosGray/40 border border-white/5 p-8 rounded-xl space-y-6">
@@ -426,7 +429,6 @@
     <!-- SECCIÓN CONTACTO -->
     <section id="contacto" class="py-24 bg-kaosGray border-t border-kaosRed/10 scroll-mt-20">
         <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-            <!-- RESTAURADO: Tu logo en el área de contacto -->
             <img src="1000107265.jpg" alt="Logo KAOS MOTO GROUP" class="h-28 w-28 mx-auto rounded-full border-2 border-kaosRed shadow-lg object-cover" onerror="this.src='https://placehold.co/150x150/1c1c1e/e2d1b6?text=KAOS'">
             
             <h2 class="text-4xl md:text-5xl font-bold text-white uppercase">¿QUIERES FORMAR PARTE DE LA FAMILIA?</h2>
@@ -560,8 +562,8 @@
                 introVideo.addEventListener('error', window.finalizarIntro);
             }
 
-            // Paracaídas ampliado (por si falla la carga silenciosamente o en Canvas)
-            setTimeout(() => { window.finalizarIntro(); }, 15000);
+            // Paracaídas ampliado
+            setTimeout(() => { window.finalizarIntro(); }, 12000);
 
             if (skipBtn) skipBtn.addEventListener('click', window.finalizarIntro);
             if (menuBtn) menuBtn.addEventListener('click', window.toggleMenu);
@@ -659,47 +661,48 @@
                 showToast("Has salido del buzón correctamente.", "fa-right-from-bracket");
             });
 
-            // LÓGICA DE ENVÍO SILENCIOSO (NETLIFY FORMS)
+            // LÓGICA DE ENVÍO SILENCIOSO (FORMSPREE)
             const formPropuesta = document.getElementById('form-propuesta');
-if (formPropuesta) {
-    formPropuesta.addEventListener('submit', (e) => {
-        e.preventDefault();
+            if (formPropuesta) {
+                formPropuesta.addEventListener('submit', (e) => {
+                    e.preventDefault();
 
-        const btnSubmit = document.getElementById('btn-submit-proposal');
-        const originalText = btnSubmit.innerHTML;
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Procesando...`;
+                    const btnSubmit = document.getElementById('btn-submit-proposal');
+                    const originalText = btnSubmit.innerHTML;
+                    btnSubmit.disabled = true;
+                    btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Procesando...`;
 
-        const formData = new FormData(formPropuesta);
+                    const formData = new FormData(formPropuesta);
 
-        // Aquí está tu enlace exacto de Formspree
-        fetch("https://formspree.io/f/xojzgeyz", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json"
-            },
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                showToast("¡Propuesta enviada al buzón de la Junta con éxito!", "fa-circle-check");
-                formPropuesta.reset();
-                if (typeof hiddenAlias !== 'undefined' && typeof bikerAlias !== 'undefined') {
-                    hiddenAlias.value = bikerAlias;
-                }
-            } else {
-                showToast("Hubo un error en el servidor. Inténtalo de nuevo.", "fa-triangle-exclamation");
+                    // Petición a Formspree usando tu endpoint exacto
+                    fetch("https://formspree.io/f/xojzgeyz", {
+                        method: "POST",
+                        headers: {
+                            "Accept": "application/json"
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            showToast("¡Propuesta enviada al buzón de la Junta con éxito!", "fa-circle-check");
+                            formPropuesta.reset();
+                            if (hiddenAlias && bikerAlias) {
+                                hiddenAlias.value = bikerAlias;
+                            }
+                        } else {
+                            showToast("Hubo un error en el servidor. Revisa si Formspree pide captcha.", "fa-triangle-exclamation");
+                        }
+                    })
+                    .catch((error) => {
+                        showToast("Hubo un error de conexión. Inténtalo de nuevo.", "fa-triangle-exclamation");
+                    })
+                    .finally(() => {
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = originalText;
+                    });
+                });
             }
-        })
-        .catch((error) => {
-            showToast("Hubo un error de conexión. Inténtalo de nuevo.", "fa-triangle-exclamation");
-        })
-        .finally(() => {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = originalText;
-        });
-    });
-}
+
             // LÓGICA DEL CONTADOR AISLADA
             function actualizarContador() {
                 const ahora = new Date();
