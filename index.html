@@ -362,24 +362,19 @@
                             </div>
                         </div>
 
-                        <form id="form-propuesta" name="propuestas_junta" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4">
-                            <input type="hidden" name="form-name" value="propuestas_junta" />
-                            <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
-                            <input type="hidden" id="hidden-alias" name="Alias_Motero" value="" />
-                            
-                            <div>
-                                <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Tema / Título Principal</label>
-                                <input type="text" name="Titulo_Propuesta" id="proposal-title" required placeholder="Ej. Ruta nocturna este verano" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Explicación detallada</label>
-                                <textarea name="Detalles_Explicacion" id="proposal-desc" required rows="4" placeholder="Explica tu idea para llevarla a la próxima reunión..." class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition resize-none"></textarea>
-                            </div>
-                            
-                            <button type="submit" id="btn-submit-proposal" class="w-full bg-kaosRed hover:bg-red-800 text-white font-heading text-lg py-3.5 rounded-lg transition duration-300 tracking-wider uppercase flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-envelope"></i> Enviar a la Junta
-                            </button>
-                        </form>
+                       <form id="form-propuesta" class="space-y-4">
+    <div>
+        <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Tema / Título Principal</label>
+        <input type="text" name="Titulo_Propuesta" required placeholder="Ej. Ruta nocturna este verano" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition">
+    </div>
+    <div>
+        <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Explicación detallada</label>
+        <textarea name="Detalles_Explicacion" required rows="4" placeholder="Explica tu idea para llevarla a la próxima reunión..." class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition resize-none"></textarea>
+    </div>
+    <button type="submit" id="btn-submit-proposal" class="w-full bg-kaosRed hover:bg-red-800 text-white font-heading text-lg py-3.5 rounded-lg transition duration-300 tracking-wider uppercase flex items-center justify-center gap-2">
+        <i class="fa-solid fa-envelope"></i> Enviar a la Junta
+    </button>
+</form>
                     </div>
 
                     <div class="bg-kaosGray/40 border border-white/5 p-8 rounded-xl space-y-6">
