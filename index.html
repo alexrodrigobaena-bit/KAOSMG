@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAOS MOTO GROUP | Asociación Motera</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kaosRed: '#8b1e1e',
+                        kaosCream: '#e2d1b6',
+                        kaosDark: '#0c0c0e',
+                        kaosGray: '#1c1c1e'
+                    },
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0c0c0e;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        .biker-gradient {
+            background: linear-gradient(180deg, rgba(12,12,14,0.1) 0%, rgba(12,12,14,0.85) 70%, #0c0c0e 100%);
+        }
+        
+        /* Fondo de agua general fijo para toda la web usando tu imagen */
+        .global-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vh;
+            background-image: url('1000107265_2.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.025; 
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Contenedor con escudo sutil en secciones específicas */
+        .section-watermark {
+            position: relative;
+        }
+        .section-watermark::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('1000107265_2.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: min(450px, 90%);
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .led-panel {
+            background: linear-gradient(145deg, #160404, #000000);
+            box-shadow: inset 0 0 10px rgba(139, 30, 30, 0.4), 0 4px 15px rgba(0,0,0,0.6);
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+    </style>
+</head>
+<body class="text-gray-300 overflow-x-hidden">
+
+    <!-- PANTALLA DE INTRO -->
+    <div id="intro-overlay" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-all duration-700 ease-in-out">
+        <video id="intro-video" class="absolute w-full h-full object-cover" autoplay muted playsinline>
+            <source src="intro.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black/10"></div>
+        <button id="skip-intro-btn" class="absolute bottom-8 right-8 z-[10000] border border-white/20 hover:border-kaosRed bg-black/40 hover:bg-kaosRed/80 text-white font-heading px-6 py-2.5 rounded-full transition duration-300 text-sm tracking-widest uppercase flex items-center gap-2">
+            Saltar Intro <i class="fa-solid fa-angles-right text-xs"></i>
+        </button>
+    </div>
+
+    <!-- Fondo fijo -->
+    <div class="global-watermark"></div>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-kaosDark/90 backdrop-blur-md border-b border-kaosRed/20 py-4 px-6 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="#" class="flex items-center gap-3 group">
+            <img src="1000107265.jpg" alt="Logo KAOS" class="h-12 w-12 rounded-full border border-kaosRed group-hover:scale-110 transition duration-300 object-cover" onerror="this.src='https://placehold.co/100x100/1c1c1e/e2d1b6?text=KAOS'">
+            <span class="text-white font-heading text-xl md:text-2xl font-bold tracking-wider group-hover:text-kaosCream transition">KAOS <span class="text-kaosRed">MOTO GROUP</span></span>
+        </a>
+        
+        <div class="hidden xl:flex items-center gap-6 font-heading text-base">
+            <a href="#inicio" class="text-gray-300 hover:text-kaosRed transition">INICIO</a>
+            <a href="#nosotros" class="text-gray-300 hover:text-kaosRed transition">NOSOTROS</a>
+            <a href="#rutas" class="text-gray-300 hover:text-kaosRed transition">PROXIMA SALIDA</a>
+            <a href="#propuestas" class="text-gray-300 hover:text-kaosRed font-semibold transition flex items-center gap-1.5"><i class="fa-solid fa-comments text-kaosRed"></i> REUNIONES</a>
+            <a href="#filosofia" class="text-gray-300 hover:text-kaosRed transition">REGLAS</a>
+            <a href="#contacto" class="bg-kaosRed hover:bg-red-800 text-white px-4 py-2 rounded-md transition duration-300 shadow-lg shadow-kaosRed/30">UNIRSE AL CLUB</a>
+        </div>
+
+        <button id="menu-btn" class="xl:hidden text-white text-2xl focus:outline-none">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </nav>
+
+    <!-- MENÚ MÓVIL -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 w-64 bg-kaosDark/95 border-l border-kaosRed/30 z-50 transform translate-x-full transition-transform duration-300 ease-in-out p-6 pt-24">
+        <button id="close-btn" class="absolute top-6 right-6 text-white text-2xl">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="flex flex-col gap-6 font-heading text-xl">
+            <a href="#inicio" class="text-gray-300 hover:text-kaosRed transition" onclick="toggleMenu()">INICIO</a>
+            <a href="#nosotros" class="text-gray-300 hover:text-kaosRed transition" onclick="toggleMenu()">NOSOTROS</a>
+            <a href="#rutas" class="text-gray-300 hover:text-kaosRed transition" onclick="toggleMenu()">PROXIMA SALIDA</a>
+            <a href="#propuestas" class="text-kaosCream hover:text-kaosRed transition" onclick="toggleMenu()">REUNIONES</a>
+            <a href="#filosofia" class="text-gray-300 hover:text-kaosRed transition" onclick="toggleMenu()">REGLAS</a>
+            <a href="#contacto" class="bg-kaosRed text-center text-white py-2 rounded-md transition" onclick="toggleMenu()">UNIRSE AL CLUB</a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <header id="inicio" class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1950&q=80" alt="Carretera" class="w-full h-full object-cover scale-105 filter brightness-[0.35]">
+            <div class="absolute inset-0 bg-cover bg-center mix-blend-color-dodge opacity-[0.12] pointer-events-none" style="background-image: url('1000107265_2.jpg');"></div>
+            <div class="absolute inset-0 biker-gradient"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mt-16">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-kaosRed/40 bg-kaosRed/10 text-kaosCream text-sm md:text-base font-semibold mb-6 tracking-widest uppercase">
+                <i class="fa-solid fa-motorcycle text-kaosRed animate-pulse"></i> Cataluña, España
+            </div>
+            <h1 class="text-6xl md:text-9xl font-black text-white leading-tight uppercase tracking-tight">
+                KAOS <span class="text-transparent bg-clip-text bg-gradient-to-r from-kaosRed to-red-500">MOTO</span> GROUP
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-300 mt-6 max-w-2xl mx-auto font-light leading-relaxed">
+                Asociación Motera. Rodando sin reglas, unidos por el asfalto y la hermandad de la carretera.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#rutas" class="bg-kaosRed hover:bg-red-800 text-white font-heading text-xl px-8 py-4 rounded-md transition duration-300 tracking-wider shadow-lg shadow-kaosRed/40 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-route"></i> VER PRÓXIMA RUTA
+                </a>
+                <a href="#nosotros" class="border border-white/20 hover:border-kaosRed hover:bg-white/5 text-white font-heading text-xl px-8 py-4 rounded-md transition duration-300 tracking-wider flex items-center justify-center gap-2">
+                    CONÓCENOS
+                </a>
+            </div>
+        </div>
+        
+        <!-- Indicador de scroll -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-center animate-bounce">
+            <a href="#nosotros" class="text-kaosCream/50 hover:text-kaosCream transition">
+                <p class="text-xs tracking-widest mb-2 font-heading">DESCUBRE MÁS</p>
+                <i class="fa-solid fa-chevron-down text-lg"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- NOSOTROS -->
+    <section id="nosotros" class="py-24 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
+                <div class="relative group">
+                    <div class="absolute -inset-1.5 bg-gradient-to-r from-kaosRed to-red-900 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-kaosDark rounded-full p-4 border-2 border-kaosRed/40">
+                        <img src="1000107265.jpg" alt="Escudo oficial KAOS MOTO GROUP" class="w-80 h-80 md:w-96 md:h-96 rounded-full object-cover shadow-2xl transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/400x400/1c1c1e/e2d1b6?text=KAOS+MOTO+GROUP'">
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-6 order-1 lg:order-2">
+                <div class="flex items-center gap-2 text-kaosRed font-heading text-xl font-bold tracking-widest uppercase">
+                    <div class="h-1 w-10 bg-kaosRed"></div> NUESTRA IDENTIDAD
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white uppercase">BIENVENIDOS AL <span class="text-kaosCream">KAOS</span></h2>
+                <p class="text-lg text-gray-400 font-light leading-relaxed">
+                    No somos simplemente un grupo que sale a hacer curvas los fines de semana; somos una familia de apasionados del motor unida por el respeto, la lealtad y la libertad absoluta sobre dos ruedas.
+                </p>
+                <p class="text-lg text-gray-400 font-light leading-relaxed">
+                    En <strong class="text-white font-semibold">Kaos Moto Group</strong> no nos importa la cilindrada ni la marca de tu montura. Lo que de verdad cuenta es la actitud de quien va sobre el asiento, las ganas de descubrir nuevos destinos y de respetarnos dentro y fuera del asfalto.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div class="border-l-4 border-kaosRed pl-4">
+                        <p class="text-3xl font-heading font-bold text-white">+5000</p>
+                        <p class="text-sm text-gray-400 uppercase tracking-widest">Kilómetros al año</p>
+                    </div>
+                    <div class="border-l-4 border-kaosCream pl-4">
+                        <p class="text-3xl font-heading font-bold text-white">100%</p>
+                        <p class="text-sm text-gray-400 uppercase tracking-widest">Hermandad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRÓXIMA RUTA -->
+    <section id="rutas" class="py-24 bg-gradient-to-b from-kaosDark via-kaosGray to-kaosDark border-y border-kaosRed/10 scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="inline-block text-kaosRed font-heading text-xl font-bold tracking-widest uppercase mb-3">
+                    <i class="fa-solid fa-flag-checkered mr-2"></i> AGENDA DEL CLUB
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white uppercase">PRÓXIMA RUTA OFICIAL</h2>
+                <p class="text-gray-400 mt-4">Prepara tu máquina, llena el depósito y únete a nuestra próxima gran salida por las mejores carreteras.</p>
+            </div>
+
+            <div class="bg-kaosDark rounded-2xl border border-kaosRed/20 overflow-hidden shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div class="lg:col-span-7 p-8 md:p-12 space-y-8 flex flex-col justify-between">
+                        <div>
+                            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                                <span class="bg-kaosRed/20 text-kaosCream border border-kaosRed/40 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">PREPIRINEO CATALÁN</span>
+                                <span class="flex items-center gap-1 text-xs text-red-500 font-bold uppercase tracking-widest"><span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> CUENTA ATRÁS EN VIVO</span>
+                            </div>
+
+                            <!-- CONTADOR -->
+                            <div class="flex items-center gap-3 sm:gap-4 font-heading mb-8">
+                                <div class="flex flex-col items-center">
+                                    <div class="led-panel w-16 h-16 sm:w-20 sm:h-20 rounded-xl border border-red-900/60 flex items-center justify-center">
+                                        <span id="lbl-dias" class="font-mono text-3xl sm:text-4xl font-bold text-red-500 tracking-wider">00</span>
+                                    </div>
+                                    <span class="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2 tracking-widest">Días</span>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-bold text-red-700/80 mb-6">:</div>
+                                <div class="flex flex-col items-center">
+                                    <div class="led-panel w-16 h-16 sm:w-20 sm:h-20 rounded-xl border border-red-900/60 flex items-center justify-center">
+                                        <span id="lbl-horas" class="font-mono text-3xl sm:text-4xl font-bold text-red-500 tracking-wider">00</span>
+                                    </div>
+                                    <span class="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2 tracking-widest">Horas</span>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-bold text-red-700/80 mb-6">:</div>
+                                <div class="flex flex-col items-center">
+                                    <div class="led-panel w-16 h-16 sm:w-20 sm:h-20 rounded-xl border border-red-900/60 flex items-center justify-center">
+                                        <span id="lbl-minutos" class="font-mono text-3xl sm:text-4xl font-bold text-red-500 tracking-wider">00</span>
+                                    </div>
+                                    <span class="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2 tracking-widest">Minutos</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-3xl md:text-4xl font-bold text-white uppercase">Ruta de Curvas y Almuerzo de Brasa</h3>
+                            <p class="text-gray-400 mt-3 font-light leading-relaxed">
+                                Un trazado perfecto pensado para disfrutar de la conducción, paisajes montañosos espectaculares y un almuerzo rústico de hermandad a mitad de camino. ¡Apto para todos los niveles!
+                            </p>
+                        </div>
+
+                        <!-- RESTAURADO: Detalles exactos de la ruta -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-y border-white/5">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-kaosRed/10 p-3 rounded-lg text-kaosRed text-xl"><i class="fa-solid fa-calendar-days"></i></div>
+                                <div>
+                                    <p class="text-sm text-gray-500 uppercase font-semibold">Fecha y Hora</p>
+                                    <p id="route-date-text" class="text-white font-medium">Próximo Domingo</p>
+                                    <p class="text-sm text-gray-400">Salida puntual 09:00 h</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-kaosRed/10 p-3 rounded-lg text-kaosRed text-xl"><i class="fa-solid fa-gas-pump"></i></div>
+                                <div>
+                                    <p class="text-sm text-gray-500 uppercase font-semibold">Punto de Encuentro</p>
+                                    <p class="text-white font-medium">Gasolinera de la C-35</p>
+                                    <p class="text-sm text-gray-400">¡Depósitos llenos!</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-kaosRed/10 p-3 rounded-lg text-kaosRed text-xl"><i class="fa-solid fa-route"></i></div>
+                                <div>
+                                    <p class="text-sm text-gray-500 uppercase font-semibold">Dificultad e Itinerario</p>
+                                    <p class="text-white font-medium">Nivel Medio / 180 km</p>
+                                    <p class="text-sm text-gray-400">Carreteras secundarias y curvas</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-kaosRed/10 p-3 rounded-lg text-kaosRed text-xl"><i class="fa-solid fa-utensils"></i></div>
+                                <div>
+                                    <p class="text-sm text-gray-500 uppercase font-semibold">Parada Intermedia</p>
+                                    <p class="text-white font-medium">Almuerzo en Masía</p>
+                                    <p class="text-sm text-gray-400">Brasa y hermandad</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openModal()" class="w-full sm:w-auto self-start bg-kaosRed hover:bg-red-800 text-white font-heading text-lg px-8 py-3.5 rounded-md transition duration-300 shadow-md shadow-kaosRed/20 uppercase tracking-widest flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i> Quiero inscribirme gratis
+                        </button>
+                    </div>
+                    
+                    <!-- RESTAURADO: Tu imagen exacta de weserv -->
+                    <div class="lg:col-span-5 relative min-h-[400px]">
+                        <img src="https://images.weserv.nl/?url=www.buscounviaje.com/fotos-tours/287/288800/Ruta.66.moto.jpg" 
+                             alt="Harley Davidson Ruta 66" 
+                             class="w-full h-full object-cover" 
+                             onerror="this.src='https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE PROPUESTAS (BUZÓN NETLIFY) -->
+    <section id="propuestas" class="py-24 bg-gradient-to-b from-kaosDark to-kaosGray border-b border-kaosRed/10 scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-block text-kaosRed font-heading text-xl font-bold tracking-widest uppercase mb-3">
+                    <i class="fa-solid fa-envelope-open-text mr-2"></i> ORDEN DEL DÍA
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white uppercase">BUZÓN DE LA JUNTA</h2>
+                <p class="text-gray-400 mt-4">¿Tienes ideas para el club, nuevas rutas o propuestas de parches? Envía tu propuesta. Se guardará de forma privada y se votará en la próxima reunión presencial.</p>
+            </div>
+
+            <div class="bg-kaosDark border border-kaosRed/20 rounded-2xl p-6 md:p-10 shadow-2xl">
+                
+                <div id="alias-registration-card" class="max-w-md mx-auto text-center space-y-6 py-6">
+                    <div class="h-16 w-16 bg-kaosRed/10 text-kaosRed rounded-full flex items-center justify-center text-3xl mx-auto border border-kaosRed/30">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white uppercase tracking-wider">Acceso Privado</h3>
+                    <p class="text-gray-400 text-sm font-light">Este buzón está restringido solo para miembros oficiales de <strong>KAOS MOTO GROUP</strong>.</p>
+                    
+                    <div class="space-y-3 text-left">
+                        <div>
+                            <label class="block text-xs text-gray-500 font-bold uppercase tracking-widest mb-1.5 ml-1">Alias / Apodo Motero</label>
+                            <input type="text" id="input-biker-alias" placeholder="Ej. Rider_Asfalto" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition font-semibold text-center">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-500 font-bold uppercase tracking-widest mb-1.5 ml-1">Llave Secreta del Club 🔑</label>
+                            <input type="password" id="input-club-pass" placeholder="••••••••" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition font-semibold text-center tracking-widest">
+                        </div>
+                        <button id="btn-save-alias" class="w-full bg-kaosRed hover:bg-red-800 text-white font-heading text-lg py-3 rounded-lg tracking-wider transition duration-300 uppercase shadow-lg shadow-kaosRed/20 mt-4">
+                            Verificar y Acceder
+                        </button>
+                    </div>
+                </div>
+
+                <div id="biker-board-portal" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between border-b border-white/5 pb-4">
+                            <p class="text-sm text-gray-500 font-semibold uppercase tracking-wider">Redactar Propuesta</p>
+                            <div class="flex items-center gap-2 text-xs text-kaosCream bg-kaosRed/10 border border-kaosRed/20 px-2.5 py-1 rounded-full">
+                                <i class="fa-solid fa-user text-[10px]"></i>
+                                <span id="current-biker-badge" class="font-bold">Motero</span>
+                                <button id="btn-change-alias" class="text-red-500 hover:text-red-400 font-bold ml-1.5 underline" title="Cambiar Alias">Salir</button>
+                            </div>
+                        </div>
+
+                        <form id="form-propuesta" name="propuestas_junta" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4">
+                            <input type="hidden" name="form-name" value="propuestas_junta" />
+                            <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
+                            <input type="hidden" id="hidden-alias" name="Alias_Motero" value="" />
+                            
+                            <div>
+                                <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Tema / Título Principal</label>
+                                <input type="text" name="Titulo_Propuesta" id="proposal-title" required placeholder="Ej. Ruta nocturna este verano" class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 font-bold uppercase tracking-wider mb-2">Explicación detallada</label>
+                                <textarea name="Detalles_Explicacion" id="proposal-desc" required rows="4" placeholder="Explica tu idea para llevarla a la próxima reunión..." class="w-full bg-kaosGray border border-white/10 focus:border-kaosRed rounded-lg px-4 py-3 text-white focus:outline-none transition resize-none"></textarea>
+                            </div>
+                            
+                            <button type="submit" id="btn-submit-proposal" class="w-full bg-kaosRed hover:bg-red-800 text-white font-heading text-lg py-3.5 rounded-lg transition duration-300 tracking-wider uppercase flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-envelope"></i> Enviar a la Junta
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-kaosGray/40 border border-white/5 p-8 rounded-xl space-y-6">
+                        <div class="h-12 w-12 bg-kaosRed/10 text-kaosRed rounded-full flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-gavel"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white uppercase tracking-wide">¿Cómo funciona este buzón?</h3>
+                        <ul class="space-y-4 text-gray-400 font-light text-sm">
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-kaosRed mt-1"></i> <span>Toda propuesta enviada por aquí es <strong>completamente privada</strong>. Solo la directiva/secretaría del club tiene acceso a leerlas.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-kaosRed mt-1"></i> <span>El sistema compilará las ideas en un documento Excel (CSV) oficial que se imprimirá para la próxima reunión presencial.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-kaosRed mt-1"></i> <span>En la junta, se leerán por orden de llegada y se someterán a debate y votación a mano alzada entre los miembros. ¡Tu voz cuenta!</span></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN FILOSOFÍA -->
+    <section id="filosofia" class="py-24 max-w-7xl mx-auto px-6 md:px-12 scroll-mt-20 section-watermark">
+        <div class="relative z-10 text-center max-w-3xl mx-auto mb-16">
+            <div class="inline-block text-kaosRed font-heading text-xl font-bold tracking-widest uppercase mb-3">
+                <i class="fa-solid fa-shield-halved mr-2"></i> LEYES DE LA CARRETERA
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-white uppercase">REGLAS DE ORO DEL CLUB</h2>
+            <p class="text-gray-400 mt-4">Para rodar con KAOS MOTO GROUP, compartimos una serie de pilares innegociables para garantizar que cada ruta empiece y termine con una sonrisa.</p>
+        </div>
+
+        <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-kaosGray/90 backdrop-blur-sm border border-white/5 rounded-xl p-8 hover:border-kaosRed/50 transition duration-300 group">
+                <div class="h-14 w-14 rounded-lg bg-kaosRed/10 text-kaosRed flex items-center justify-center text-3xl mb-6 group-hover:bg-kaosRed group-hover:text-white transition duration-300"><i class="fa-solid fa-people-group"></i></div>
+                <h3 class="text-2xl font-bold text-white uppercase mb-4">1. El Grupo es lo Primero</h3>
+                <p class="text-gray-400 font-light leading-relaxed">Salimos todos juntos, rodamos todos juntos y regresamos todos juntos. Nadie se queda atrás por ninguna circunstancia o avería. Nos cuidamos mutuamente.</p>
+            </div>
+            <div class="bg-kaosGray/90 backdrop-blur-sm border border-white/5 rounded-xl p-8 hover:border-kaosRed/50 transition duration-300 group">
+                <div class="h-14 w-14 rounded-lg bg-kaosRed/10 text-kaosRed flex items-center justify-center text-3xl mb-6 group-hover:bg-kaosRed group-hover:text-white transition duration-300"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h3 class="text-2xl font-bold text-white uppercase mb-4">2. Seguridad Activa</h3>
+                <p class="text-gray-400 font-light leading-relaxed">Se respetan escrupulosamente las distancias de seguridad y las indicaciones del jefe de ruta (Road Captain). El asfalto no es un circuito de carreras.</p>
+            </div>
+            <div class="bg-kaosGray/90 backdrop-blur-sm border border-white/5 rounded-xl p-8 hover:border-kaosRed/50 transition duration-300 group">
+                <div class="h-14 w-14 rounded-lg bg-kaosRed/10 text-kaosRed flex items-center justify-center text-3xl mb-6 group-hover:bg-kaosRed group-hover:text-white transition duration-300"><i class="fa-solid fa-handshake"></i></div>
+                <h3 class="text-2xl font-bold text-white uppercase mb-4">3. Respeto y Buen Rollo</h3>
+                <p class="text-gray-400 font-light leading-relaxed">Dejamos los malos rollos y problemas fuera. Cada salida es un espacio de compañerismo, risas y anécdotas compartiendo una mesa bien servida.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO -->
+    <section id="contacto" class="py-24 bg-kaosGray border-t border-kaosRed/10 scroll-mt-20">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
+            <!-- RESTAURADO: Tu logo en el área de contacto -->
+            <img src="1000107265.jpg" alt="Logo KAOS MOTO GROUP" class="h-28 w-28 mx-auto rounded-full border-2 border-kaosRed shadow-lg object-cover" onerror="this.src='https://placehold.co/150x150/1c1c1e/e2d1b6?text=KAOS'">
+            
+            <h2 class="text-4xl md:text-5xl font-bold text-white uppercase">¿QUIERES FORMAR PARTE DE LA FAMILIA?</h2>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                Si buscas un grupo activo, sano y con pasión real por devorar kilómetros en Cataluña, estás a solo un paso de unirte. Síguenos o mándanos un mensaje directo para que te agreguemos al chat de salidas.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 pt-4">
+                <a href="https://instagram.com" target="_blank" class="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white px-8 py-4 rounded-lg font-heading text-lg transition duration-300 tracking-wider flex items-center gap-3 shadow-lg shadow-purple-600/20">
+                    <i class="fa-brands fa-instagram text-2xl"></i> NUESTRO INSTAGRAM
+                </a>
+                <a href="https://wa.me" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-heading text-lg transition duration-300 tracking-wider flex items-center gap-3 shadow-lg shadow-emerald-600/20">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> GRUPO DE WHATSAPP
+                </a>
+            </div>
+            <p class="text-xs text-gray-500 uppercase tracking-widest pt-8">www.kaosmotogroup.com (¡Próximamente!)</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-kaosDark py-12 px-6 border-t border-white/5 text-center text-sm text-gray-500">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p>&copy; 2026 KAOS MOTO GROUP. Todos los derechos reservados.</p>
+            <div class="flex gap-6">
+                <a href="#inicio" class="hover:text-kaosRed transition">Volver arriba</a>
+                <span class="text-white/10">|</span>
+                <span class="text-gray-400 font-semibold">Respeto, Lealtad y Libertad</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL INSCRIPCIÓN -->
+    <div id="rsvp-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-kaosDark border border-kaosRed/30 rounded-2xl max-w-md w-full p-8 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center space-y-4">
+                <div class="h-16 w-16 bg-kaosRed/10 text-kaosRed rounded-full flex items-center justify-center text-3xl mx-auto"><i class="fa-solid fa-clipboard-check"></i></div>
+                <h3 class="text-3xl font-bold text-white uppercase">¡ÚNETE A LA SALIDA!</h3>
+                <p class="text-gray-400 font-light text-sm">Organizamos las rutas de forma ágil por nuestro grupo oficial de WhatsApp para coordinar los menús del almuerzo y puntos intermedios.</p>
+                <div class="bg-kaosGray/50 border border-white/5 p-4 rounded-lg text-left text-xs text-gray-400 space-y-2">
+                    <p><strong class="text-white">🚨 Requisito principal:</strong> Depósito lleno al llegar y muchas ganas de disfrutar.</p>
+                    <p><strong class="text-white">📍 Ubicación:</strong> C-35, salida domingo a las 09:00 h.</p>
+                </div>
+                <a href="https://wa.me" target="_blank" class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-heading text-lg py-3 rounded-md transition duration-300 shadow-lg shadow-emerald-600/20"><i class="fa-brands fa-whatsapp mr-2"></i> Confirmar por WhatsApp</a>
+                <button onclick="closeModal()" class="text-xs text-gray-500 hover:text-gray-300 underline">Volver a la web</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIONES TOAST -->
+    <div id="kaos-toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[10000] bg-kaosGray border border-kaosRed/60 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 font-semibold text-sm transition-all duration-300 opacity-0 pointer-events-none scale-90">
+        <i id="toast-icon" class="fa-solid text-kaosRed"></i>
+        <span id="toast-message">Mensaje</span>
+    </div>
+
+    <!-- SCRIPTS LÓGICA PRINCIPAL -->
+    <script>
+        // Funciones UI Básicas
+        window.finalizarIntro = function() {
+            const introOverlay = document.getElementById('intro-overlay');
+            const introVideo = document.getElementById('intro-video');
+            if (introOverlay) {
+                introOverlay.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    if (introVideo) {
+                        try { introVideo.pause(); } catch(e) {}
+                    }
+                    introOverlay.style.display = 'none';
+                }, 700);
+            }
+        };
+
+        window.toggleMenu = function() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('translate-x-full');
+        };
+
+        window.openModal = function() {
+            const modal = document.getElementById('rsvp-modal');
+            const modalContent = modal ? modal.querySelector('div') : null;
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    if (modalContent) {
+                        modalContent.classList.remove('scale-95');
+                        modalContent.classList.add('scale-100');
+                    }
+                }, 50);
+            }
+        };
+
+        window.closeModal = function() {
+            const modal = document.getElementById('rsvp-modal');
+            const modalContent = modal ? modal.querySelector('div') : null;
+            if (modal) {
+                modal.classList.add('opacity-0');
+                if (modalContent) {
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                }
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        };
+
+        function showToast(message, iconClass = 'fa-info-circle') {
+            const toast = document.getElementById('kaos-toast');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
+            if (toast && icon && msg) {
+                icon.className = `fa-solid ${iconClass} text-kaosRed text-lg`;
+                msg.innerText = message;
+                toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+                toast.classList.add('opacity-100', 'scale-100');
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100', 'scale-100');
+                    toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+                }, 3000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const introVideo = document.getElementById('intro-video');
+            const skipBtn = document.getElementById('skip-intro-btn');
+            const menuBtn = document.getElementById('menu-btn');
+            const closeBtn = document.getElementById('close-btn');
+
+            if (introVideo) {
+                introVideo.addEventListener('ended', window.finalizarIntro);
+                introVideo.addEventListener('error', window.finalizarIntro);
+            }
+
+            // Paracaídas ampliado (por si falla la carga silenciosamente o en Canvas)
+            setTimeout(() => { window.finalizarIntro(); }, 15000);
+
+            if (skipBtn) skipBtn.addEventListener('click', window.finalizarIntro);
+            if (menuBtn) menuBtn.addEventListener('click', window.toggleMenu);
+            if (closeBtn) closeBtn.addEventListener('click', window.toggleMenu);
+
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (nav) {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('py-2', 'shadow-2xl', 'shadow-black/55');
+                        nav.classList.remove('py-4');
+                    } else {
+                        nav.classList.add('py-4');
+                        nav.classList.remove('py-2', 'shadow-2xl');
+                    }
+                }
+            });
+
+            // LÓGICA DE ACCESO (ALIAS)
+            const PASSWORD_SECRETA_CLUB = "KAOS2026";
+            let bikerAlias = '';
+            let accesoVerificado = false;
+            
+            try {
+                bikerAlias = localStorage.getItem('kaos_biker_alias') || '';
+                accesoVerificado = localStorage.getItem('kaos_access_verified') === 'true';
+            } catch(e) {
+                console.warn("Navegador en modo estricto, usando sesión temporal.");
+            }
+
+            const aliasCard = document.getElementById('alias-registration-card');
+            const boardPortal = document.getElementById('biker-board-portal');
+            const inputAlias = document.getElementById('input-biker-alias');
+            const inputPass = document.getElementById('input-club-pass');
+            const badgeAlias = document.getElementById('current-biker-badge');
+            const hiddenAlias = document.getElementById('hidden-alias');
+
+            function actualizarPantallaPortal() {
+                if (bikerAlias && accesoVerificado) {
+                    if (aliasCard) aliasCard.classList.add('hidden');
+                    if (boardPortal) boardPortal.classList.remove('hidden');
+                    if (badgeAlias) badgeAlias.innerText = bikerAlias;
+                    if (hiddenAlias) hiddenAlias.value = bikerAlias; 
+                } else {
+                    if (boardPortal) boardPortal.classList.add('hidden');
+                    if (aliasCard) aliasCard.classList.remove('hidden');
+                }
+            }
+
+            actualizarPantallaPortal();
+
+            if (inputPass) {
+                inputPass.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        document.getElementById('btn-save-alias').click();
+                    }
+                });
+            }
+
+            document.getElementById('btn-save-alias')?.addEventListener('click', () => {
+                const valAlias = inputAlias.value.trim();
+                const valPass = inputPass.value.trim();
+
+                if (!valAlias) return showToast("Por favor, introduce tu Alias Motero.", "fa-triangle-exclamation");
+                
+                if (valPass !== PASSWORD_SECRETA_CLUB) {
+                    inputPass.value = '';
+                    return showToast("Llave del club incorrecta. Acceso denegado.", "fa-shield-halved");
+                }
+
+                bikerAlias = valAlias;
+                accesoVerificado = true;
+                
+                try {
+                    localStorage.setItem('kaos_biker_alias', bikerAlias);
+                    localStorage.setItem('kaos_access_verified', 'true');
+                } catch(e) {}
+                
+                actualizarPantallaPortal();
+                showToast(`¡Acceso concedido! Bienvenido, ${bikerAlias}`, "fa-circle-check");
+            });
+
+            document.getElementById('btn-change-alias')?.addEventListener('click', () => {
+                bikerAlias = '';
+                accesoVerificado = false;
+                
+                try {
+                    localStorage.removeItem('kaos_biker_alias');
+                    localStorage.removeItem('kaos_access_verified');
+                } catch(e) {}
+                
+                if (inputAlias) inputAlias.value = '';
+                if (inputPass) inputPass.value = '';
+                actualizarPantallaPortal();
+                showToast("Has salido del buzón correctamente.", "fa-right-from-bracket");
+            });
+
+            // LÓGICA DE ENVÍO SILENCIOSO (NETLIFY FORMS)
+            const formPropuesta = document.getElementById('form-propuesta');
+            if (formPropuesta) {
+                formPropuesta.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const btnSubmit = document.getElementById('btn-submit-proposal');
+                    const originalText = btnSubmit.innerHTML;
+                    btnSubmit.disabled = true;
+                    btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Procesando...`;
+
+                    const formData = new FormData(formPropuesta);
+
+                    fetch("/", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: new URLSearchParams(formData).toString()
+                    })
+                    .then(() => {
+                        showToast("¡Propuesta enviada al buzón de la Junta con éxito!", "fa-circle-check");
+                        formPropuesta.reset();
+                        hiddenAlias.value = bikerAlias;
+                    })
+                    .catch((error) => {
+                        showToast("Hubo un error de conexión. Inténtalo de nuevo.", "fa-triangle-exclamation");
+                    })
+                    .finally(() => {
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = originalText;
+                    });
+                });
+            }
+
+            // LÓGICA DEL CONTADOR AISLADA
+            function actualizarContador() {
+                const ahora = new Date();
+                let proximoDomingo = new Date();
+                proximoDomingo.setDate(ahora.getDate() + (7 - ahora.getDay()) % 7);
+                proximoDomingo.setHours(9, 0, 0, 0);
+
+                if (ahora >= proximoDomingo) {
+                    proximoDomingo.setDate(proximoDomingo.getDate() + 7);
+                }
+
+                const dateTextEl = document.getElementById('route-date-text');
+                if (dateTextEl) {
+                    dateTextEl.innerText = `Dom. ${proximoDomingo.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+                }
+
+                const diferencia = proximoDomingo - ahora;
+                if (diferencia <= 0) return;
+
+                const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+
+                const lblDias = document.getElementById('lbl-dias');
+                const lblHoras = document.getElementById('lbl-horas');
+                const lblMinutos = document.getElementById('lbl-minutos');
+
+                if (lblDias) lblDias.innerText = String(dias).padStart(2, '0');
+                if (lblHoras) lblHoras.innerText = String(horas).padStart(2, '0');
+                if (lblMinutos) lblMinutos.innerText = String(minutos).padStart(2, '0');
+            }
+
+            actualizarContador();
+            setInterval(actualizarContador, 60000);
+        });
+    </script>
+</body>
+</html>
