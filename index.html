@@ -85,11 +85,11 @@
 
     <!-- PANTALLA DE INTRO -->
     <div id="intro-overlay" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-all duration-700 ease-in-out">
-        <video id="intro-video" class="absolute w-full h-full object-cover" autoplay muted playsinline>
+        <video id="intro-video" class="absolute w-full h-full object-cover" autoplay muted playsinline onended="finalizarIntro()" onerror="finalizarIntro()">
             <source src="intro.mp4" type="video/mp4">
         </video>
         <div class="absolute inset-0 bg-black/10"></div>
-        <button id="skip-intro-btn" class="absolute bottom-8 right-8 z-[10000] border border-white/20 hover:border-kaosRed bg-black/40 hover:bg-kaosRed/80 text-white font-heading px-6 py-2.5 rounded-full transition duration-300 text-sm tracking-widest uppercase flex items-center gap-2">
+        <button id="skip-intro-btn" onclick="finalizarIntro()" class="absolute bottom-8 right-8 z-[10000] border border-white/20 hover:border-kaosRed bg-black/40 hover:bg-kaosRed/80 text-white font-heading px-6 py-2.5 rounded-full transition duration-300 text-sm tracking-widest uppercase flex items-center gap-2 cursor-pointer">
             Saltar Intro <i class="fa-solid fa-angles-right text-xs"></i>
         </button>
     </div>
@@ -493,7 +493,7 @@
         const ADMIN_RUTA = {
             // Pon 'true' (sin comillas) para mostrar la ruta y el contador.
             // Pon 'false' (sin comillas) para ocultar todo y mostrar el cartel "En breve más info".
-            hayRutaActiva: False, 
+            hayRutaActiva: false, 
 
             // Fecha y hora exacta de la salida. (Formato: AAAA-MM-DDTHH:MM:00)
             fechaSalida: "2026-06-28T09:00:00", 
@@ -523,6 +523,9 @@
                 }, 700);
             }
         };
+
+        // Respaldo de seguridad: forzar quitar la intro tras 8 segundos pase lo que pase
+        setTimeout(window.finalizarIntro, 12000);
 
         window.toggleMenu = function() {
             const menu = document.getElementById('mobile-menu');
@@ -644,16 +647,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Intro Video
-            const introVideo = document.getElementById('intro-video');
-            const skipBtn = document.getElementById('skip-intro-btn');
-            if (introVideo) {
-                introVideo.addEventListener('ended', window.finalizarIntro);
-                introVideo.addEventListener('error', window.finalizarIntro);
-            }
-            setTimeout(() => { window.finalizarIntro(); }, 12000);
-            if (skipBtn) skipBtn.addEventListener('click', window.finalizarIntro);
-
             // Cargar datos de la ruta elegida en el Panel de Control
             cargarRuta();
 
